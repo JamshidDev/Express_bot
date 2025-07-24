@@ -6,7 +6,6 @@ const customLogger = createLogger({
     format: combine(
       label({ label: 'right meow!' }),
       timestamp(),
-      prettyPrint(),
       
     ),
     transports: [new transports.Console(),

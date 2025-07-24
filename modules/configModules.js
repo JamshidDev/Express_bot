@@ -30,14 +30,16 @@ config_bot.use(session({
         initial: () => {
             return {
                 client: {
-                    organization_id:null,
                     phone: null,
-                    report_number: null,
+                    pin: null,
+                    chat_id: null,
                 },
                 salary:{
                     year:null,
                     month:null,
-                }
+                },
+                uuid:null,
+                isAuth:false,
             }
         },
         storage: new MemorySessionStorage(),
@@ -68,7 +70,7 @@ config_bot.on("my_chat_member", async (ctx) => {
 
 
 config_bot.use(async (ctx, next) => {
-    let permissions = ['🔴 Bekor qilish']
+    let permissions = ['🔴 Bekor qilish', '⬅️ Orqaga', '/start']
     if (permissions.includes(ctx.message?.text)) {
         const stats = await ctx.conversation.active();
         for (let key of Object.keys(stats)) {
