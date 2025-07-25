@@ -70,7 +70,7 @@ config_bot.on("my_chat_member", async (ctx) => {
 
 
 config_bot.use(async (ctx, next) => {
-    let permissions = ['🔴 Bekor qilish', '⬅️ Orqaga', '/start']
+    let permissions = ['🔴 Bekor qilish', '⬅️ Orqaga', '/start', '🚪 Chiqish']
     if (permissions.includes(ctx.message?.text)) {
         const stats = await ctx.conversation.active();
         for (let key of Object.keys(stats)) {

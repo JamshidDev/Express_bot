@@ -250,6 +250,7 @@ async function main_menu_conversation(conversation, ctx) {
         .text("☎️ Kontaktlar")
         .row()
         .text("ℹ️ Biz haqimizda")
+        .text("🚪 Chiqish")
         .resized()
 
     await ctx.reply("⚡️ Asosiy menu ⚡️", {
@@ -289,6 +290,17 @@ pm.hears("💰 Ish haqi ma'lumotlarim", async (ctx) => {
 })
 pm.hears("🔴 Bekor qilish", async (ctx) => {
     await ctx.conversation.enter("main_menu_conversation")
+})
+pm.hears("🚪 Chiqish", async (ctx) => {
+    await ctx.reply(
+        `
+Tizmdan chiqdindiz!   
+Tizimga kirish uchun <b>[🔒 Tizimga kirish]</b> tugmasini bosing.`,
+        {
+            parse_mode: "HTML",
+            reply_markup: loginBtn,
+        }
+    )
 })
 
 

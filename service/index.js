@@ -1,12 +1,15 @@
 const axios = require("axios");
 const customLogger = require("../config/customLogger");
+require('dotenv').config()
 
+const BASE_URL = process.env.BASE_URL;
+const BOT_TOKEN = process.env.BOT_TOKEN;
 const instance = axios.create({
-    baseURL: 'http://192.168.136.78:8004/api'
+    baseURL: BASE_URL,
 });
 
 instance.interceptors.request.use(function (config) {
-    config.headers['Bot-Token'] = 'test'
+    config.headers['Bot-Token'] = BOT_TOKEN
     return config;
 })
 
