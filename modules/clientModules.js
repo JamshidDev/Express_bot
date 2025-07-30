@@ -202,6 +202,7 @@ async function salary_show_conversation(conversation, ctx) {
 
         let inText = ""
         let outText = ""
+        let cardMoney = ""
 
         for (const item of v.in) {
             inText += `\n>🔹${escapeMarkdownV2(item.code)} \\- ${escapeMarkdownV2(item.type)} \\- ${escapeMarkdownV2(item.amount)} so'm`
@@ -213,6 +214,9 @@ async function salary_show_conversation(conversation, ctx) {
             outText += `\n>🔸${escapeMarkdownV2(item.code)} \\- ${escapeMarkdownV2(item.type)} \\- ${escapeMarkdownV2(item.amount)} so'm`
         }
         outText +=`\n\n>⚡️Jami ushlanma\\: ${v.out_total} so'm`
+
+        cardMoney = `\n\n\n\n>💳${v?.in_card?.code} \\: *${escapeMarkdownV2(numeral(v.in_card?.amount).format('0,0'))}* so'm `
+
 
         const msgMarkdown2 =
             `
@@ -228,6 +232,7 @@ async function salary_show_conversation(conversation, ctx) {
             + inText
             + '\n\n *🔸CHIQIMLAR🔸*'
             + outText
+            +cardMoney
 
 
         await ctx.reply(msgMarkdown2, {
