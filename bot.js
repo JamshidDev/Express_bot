@@ -21,6 +21,8 @@ bot.use(config_bot)
 
 bot.use(client_bot)
 
+
+
 bot.catch((err) => {
     const ctx = err.ctx;
     console.error(`Error while handling update ${JSON.stringify(ctx.update)}`);

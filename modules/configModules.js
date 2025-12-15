@@ -1,10 +1,10 @@
-const { Composer, MemorySessionStorage, session } = require("grammy");
+const { Composer, MemorySessionStorage, session, Keyboard} = require("grammy");
 const { Menu, MenuRange } = require("@grammyjs/menu");
 const { I18n, hears } = require("@grammyjs/i18n");
 const {
     conversations,
 } = require("@grammyjs/conversations");
-const {logout_user  } = require("../service/services/ApiService");
+const {logout_user, chekUserEv} = require("../service/services/ApiService");
 const { chatMembers } = require("@grammyjs/chat-members")
 require('dotenv').config()
 
@@ -14,6 +14,12 @@ const CHANNELS_IDS = JSON.parse(process.env.SUBSCRIBES_CHANNELS || "[]")
 
 
 const adapter = new MemorySessionStorage();
+
+
+
+
+
+
 
 const i18n = new I18n({
     defaultLocale: "uz",
@@ -79,15 +85,12 @@ config_bot.on("my_chat_member", async (ctx) => {
 
 })
 config_bot.use(async (ctx, next) => {
-    let permissions = ['🔴 Bekor qilish', '⬅️ Orqaga', '/start', '🚪 Chiqish']
+    let permissions = ['🔴 Bekor qilish', '⬅️ Orqaga', '/start', '🚪 Chiqish', '💰 Ish haqi ma\'lumotlarim']
     if (permissions.includes(ctx.message?.text)) {
         const stats = await ctx.conversation.active();
         for (let key of Object.keys(stats)) {
             await ctx.conversation.exit(key);
         }
-    }
-    ctx.config = {
-        is_admin: true
     }
     await next()
 })
@@ -126,6 +129,36 @@ config_bot.use(async (ctx, next)=>{
         }else{
             await next()
         }
+    }
+})
+
+let loginBtn = new Keyboard()
+    .text("🔒 Tizimga kirish")
+    .resized()
+
+config_bot.use(async (ctx, next)=>{
+    const isAuth = ctx.session.session_db.isAuth
+    ctx.config = {
+
+    }
+    if(!isAuth){
+        let [error, res] = await chekUserEv({
+            params: {chat_id: ctx.from.id},
+        })
+
+        if (res?.data?.user) {
+            ctx.session.session_db.isAuth = true
+            ctx.config.isAuth = true
+            ctx.session.session_db.uuid = res.data.user
+        } else {
+            ctx.config.isAuth = false
+        }
+        await next()
+
+    }else{
+        ctx.config.isAuth = true
+        console.log(ctx.config)
+        await next()
     }
 })
 

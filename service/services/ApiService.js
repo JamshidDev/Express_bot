@@ -6,12 +6,12 @@ const getMonthEv = async (payload) => {
     return await axios.get(`/v1/economist/telegram/months`, { params: payload.params }).then((res) => {
         return [null, res.data?.months]
     }).catch((error) => {
+        console.log(payload)
         return [error, null]
     })
 }
 
 const loginUserEv = async (payload) => {
-    console.log(payload)
     return await axios.post(`/v1/economist/telegram/login`, payload.data).then((res) => {
         return [null, res.data]
     }).catch((error) => {
@@ -22,7 +22,6 @@ const loginUserEv = async (payload) => {
 const checkSalaryEv = async (payload) => {
     console.log(payload)
     return await axios.get(`/v1/economist/telegram/salary`,{ params: payload.params }).then((res) => {
-        console.log(res.data)
         return [null, res.data?.salary]
     }).catch((error) => {
         return [error, null]
@@ -31,7 +30,7 @@ const checkSalaryEv = async (payload) => {
 
 const chekUserEv = async (payload) => {
     return await axios.get(`/v1/economist/telegram/check-user`, {params:payload.params}).then((res) => {
-        return [null, res.data]
+        return [null, res]
     }).catch((error) => {
         return [error, null]
     })

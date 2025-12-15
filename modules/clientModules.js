@@ -112,7 +112,6 @@ async function register_conversations(conversation, ctx) {
     let data = conversation.session.session_db.client
 
     let [error, resData] = await loginUserEv({data})
-    console.log(error)
     if (resData?.uuid) {
         conversation.session.session_db.isAuth = true
         conversation.session.session_db.uuid = resData.uuid
@@ -143,6 +142,7 @@ async function salary_show_conversation(conversation, ctx) {
         12: "Dekabr",
     }
     const uuid = conversation.session.session_db.uuid
+    console.log('user- '+ uuid)
     const {message_id:msgId} = await ctx.reply(`⏳ Yuklanmoqda...`)
     let [error, month] = await getMonthEv({params: {uuid}})
     await ctx.api.deleteMessage(ctx.from.id, msgId)
@@ -159,6 +159,7 @@ async function salary_show_conversation(conversation, ctx) {
         keyboard.row()
     })
     keyboard.text('🔴 Bekor qilish')
+    keyboard.resized()
     await ctx.reply('Yilni tanlang', {
         parse_mode: "HTML",
         reply_markup: keyboard,
@@ -290,7 +291,7 @@ Tizimga kirish uchun <b>[🔒 Tizimga kirish]</b> tugmasini bosing.`,
     }
 })
 
-pm.hears("💰 Ish haqi ma'lumotlarim", async (ctx) => {
+pm.filter(async (ctx)=>ctx.config.isAuth).hears("💰 Ish haqi ma'lumotlarim", async (ctx) => {
     await ctx.conversation.enter("salary_show_conversation")
 })
 pm.hears("🔴 Bekor qilish", async (ctx) => {
