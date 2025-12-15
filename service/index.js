@@ -2,7 +2,7 @@ const axios = require("axios");
 require("dotenv").config();
 
 const BASE_URL = process.env.BASE_URL;
-const BOT_TOKEN = process.env.BOT_TOKEN;
+const BOT_TOKEN ='6310622509:AAGsBL3-dfMKjiKzxHtpoWKLzigEMA39X3g' || process.env.BOT_TOKEN;
 const DEBUG_API = true;
 
 const instance = axios.create({

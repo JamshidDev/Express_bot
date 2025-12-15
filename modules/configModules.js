@@ -145,6 +145,7 @@ config_bot.use(async (ctx, next)=>{
         let [error, res] = await chekUserEv({
             params: {chat_id: ctx.from.id},
         })
+        console.log(res?.data)
 
         if (res?.data?.user) {
             ctx.session.session_db.isAuth = true

@@ -115,6 +115,7 @@ async function register_conversations(conversation, ctx) {
     if (resData?.uuid) {
         conversation.session.session_db.isAuth = true
         conversation.session.session_db.uuid = resData.uuid
+        console.log(resData)
         return await main_menu_conversation(conversation, ctx)
     } else {
         await ctx.reply('⚠️ Tizimda xodim topilmadi', {
