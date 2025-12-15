@@ -35,6 +35,6 @@ bot.catch((err) => {
 
 
 bot.start({
-    // Make sure to specify the desired update types
     allowed_updates: ["my_chat_member", "chat_member", "message", "callback_query", "inline_query"],
-});
+    drop_pending_updates: true,
+})
